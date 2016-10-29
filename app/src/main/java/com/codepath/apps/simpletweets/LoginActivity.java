@@ -1,13 +1,16 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.simpletweets;
 
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.oauth.OAuthLoginActionBarActivity;
-import com.codepath.oauth.OAuthLoginActivity;
 
-public class LoginActivity extends OAuthLoginActionBarActivity<RestClient> {
+
+
+//where the user signs in
+public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class LoginActivity extends OAuthLoginActionBarActivity<RestClient> {
 	public void onLoginSuccess() {
 		// Intent i = new Intent(this, PhotosActivity.class);
 		// startActivity(i);
+		Toast.makeText(this, "Successfully authenticated", Toast.LENGTH_LONG).show();
 	}
 
 	// OAuth authentication flow failed, handle the error

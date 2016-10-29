@@ -1,16 +1,13 @@
-package com.codepath.apps.restclienttemplate.models;
+package com.codepath.apps.simpletweets.models;
 
-import com.codepath.apps.restclienttemplate.MyDatabase;
+import com.codepath.apps.simpletweets.MyDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 /*
  * This is a temporary, sample model that demonstrates the basic structure
@@ -18,6 +15,8 @@ import java.util.List;
  * https://github.com/codepath/android_guides/wiki/DBFlow-Guide
  * 
  */
+
+//I will need to create the user and tweet model
 @Table(database = MyDatabase.class)
 public class SampleModel extends BaseModel {
 
@@ -55,11 +54,11 @@ public class SampleModel extends BaseModel {
 	}
 
 	// Record Finders
-	public static SampleModel byId(long id) {
+	/*public static SampleModel byId(long id) {
 		return new Select().from(SampleModel.class).where(SampleModel_Table.id.eq(id)).querySingle();
 	}
 
 	public static List<SampleModel> recentItems() {
 		return new Select().from(SampleModel.class).orderBy(SampleModel_Table.id, false).limit(300).queryList();
-	}
+	}*/
 }
