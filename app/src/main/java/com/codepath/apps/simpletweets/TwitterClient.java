@@ -34,15 +34,23 @@ public class TwitterClient extends OAuthBaseClient {
 
 	// CHANGE THIS
 	// DEFINE METHODS for different API endpoints here
-	public void getInterestingnessList(AsyncHttpResponseHandler handler) {
-		String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");
-		// Can specify query string params directly or through RequestParams.
+
+	// each method is an endpoint
+	//GET statuses/home_timeline.json
+	//count=25
+	//since_id=1
+
+	public void getHomeTimeLine(AsyncHttpResponseHandler handler) {
+		String APIUrl = getApiUrl("statuses/home_timeline.json");
+		//specify the params
 		RequestParams params = new RequestParams();
-		params.put("format", "json");
-		client.get(apiUrl, params, handler);
+		params.put("count", 25);
+		params.put("since_id", 1);
+		//execute the request
+		getClient().get(APIUrl, params, handler);
 	}
 
-	//method => endpoint
+	//composing a tweet
 
 	//HomeTimeLine - Gets us the home timeline
 

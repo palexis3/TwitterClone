@@ -5,5 +5,7 @@
     <string name="title_activity_timeline">Home Timeline</string>
     <string name="login_label">Connect to Twitter</string>
     <string name="action_settings">Connect with Twitter</string>
+    <string name="profile_name">User Name</string>
+    <string name="body">Body</string>
 
 </resources>
