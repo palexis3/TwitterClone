@@ -24,6 +24,11 @@ public class TweetComposeDialogFragment extends DialogFragment {
         //Empty constructor required for dialog fragment
     }
 
+    // Defines the listener interface with a method passing back data result.
+    public interface TweetComposeDialogListener {
+        void onComposeFinished(String input);
+    }
+
     public static TweetComposeDialogFragment newInstance(String title) {
         TweetComposeDialogFragment frag = new TweetComposeDialogFragment();
         Bundle args = new Bundle();
@@ -49,37 +54,53 @@ public class TweetComposeDialogFragment extends DialogFragment {
         watchText();
     }
 
+
     //this method watches as user is typing into compose editText
     private void watchText() {
         tweetEditText.addTextChangedListener(new TextWatcher() {
-
-            //update character count as user is typing in their content
-            String val = tweetCharacterCount.getText().toString();
-            int num = Integer.parseInt(val);
-            int temp = 0;
+            int num = tweetEditText.getText().length();
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                tweetCharacterCount.setText(String.valueOf(140 - num));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                //change counter
-                temp = num - count;
-
-                //set button to clickable when editText has content
-                if(tweetEditText.length() > 0) {
-                    tweetButton.setEnabled(true);
-                } else {
-                    tweetButton.setEnabled(false);
-                }
-
+                //update character count as user is typing in their content
+                num = tweetCharacterCount.getText().toString().length();
+                tweetCharacterCount.setText(String.valueOf(140 - num));
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                tweetCharacterCount.setText(String.valueOf(temp));
+
+                tweetCharacterCount.setText(String.valueOf(140 - num));
+
+                //set button to clickable when editText has content
+                if (tweetEditText.length() > 0) {
+                    tweetButton.setEnabled(true);
+                    //watch the button listener
+                    tweetButtonListener();
+                } else {
+                    tweetButton.setEnabled(false);
+                }
+            }
+        });
+    }
+
+
+    //user clicks 'tweet' button
+    private void tweetButtonListener() {
+        tweetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Return input text back to activity through the implemented listener
+                TweetComposeDialogListener listener = (TweetComposeDialogListener) getActivity();
+                listener.onComposeFinished(tweetEditText.getText().toString());
+                // Close the dialog and return back to the parent activity
+                dismiss();
+
             }
         });
     }

@@ -45,11 +45,11 @@ public class TwitterClient extends OAuthBaseClient {
 		getClient().get(APIUrl, params, handler);
 	}
 
-	//composing a tweet
-	public void composeTweet(AsyncHttpResponseHandler handler) {
+	//composing a tweet with data as 'status'
+	public void composeTweet(String status, AsyncHttpResponseHandler handler) {
 		String APIUrl = getApiUrl("statuses/update.json");
 		RequestParams params = new RequestParams();
-		//params.put("status", status);
+		params.put("status", status);
 		getClient().post(APIUrl, params, handler);
 
 	}

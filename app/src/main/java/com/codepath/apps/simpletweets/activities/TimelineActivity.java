@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.codepath.apps.simpletweets.R;
 import com.codepath.apps.simpletweets.TwitterApplication;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements TweetComposeDialogFragment.TweetComposeDialogListener{
 
     //access the twitter client
     private TwitterClient client;
@@ -34,6 +35,7 @@ public class TimelineActivity extends AppCompatActivity {
     private TweetsAdapter adapter;
     //floating button
     private FloatingActionButton floatingActionButton;
+    private String input; //holds the input that is sent through dialog
 
 
     @Override
@@ -79,14 +81,14 @@ public class TimelineActivity extends AppCompatActivity {
 
 
     //send an api request to get the timeline json
-    //fill the listview by creating the tweet objects from the json
+    //fill the recyclerview by creating the tweet objects from the json
     private void populateTimeline() {
 
         client.getHomeTimeLine(new JsonHttpResponseHandler() {
             //success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
-              Log.d("DEBUG", json.toString());
+                // Log.d("DEBUG", json.toString());
                 //JSON comes in here
                 //deserialize json
                 //create models and add them to the model
@@ -98,10 +100,38 @@ public class TimelineActivity extends AppCompatActivity {
             //failure
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-              Log.d("DEBUG", errorResponse.toString());
+                Log.d("DEBUG", errorResponse.toString());
             }
         });
 
     }
+
+    // This method is invoked in the activity when the listener is triggered
+    // Access the data result passed to the activity here
+    public void onComposeFinished(String status) {
+        input = status;
+        postTweet();//call post tweet method
+    }
+
+    //method sends an api post request to timeline
+    private void postTweet() {
+
+         client.composeTweet(input, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("DEBUG", response.toString());
+                Toast.makeText(getApplicationContext(), "I've successfully tweeted", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+               Log.d("DEBUG", errorResponse.toString());
+                Toast.makeText(getApplicationContext(), "I've failed tweeted", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
 
 }
