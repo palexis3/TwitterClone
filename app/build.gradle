@@ -24,6 +24,10 @@ android {
     }
 }
 
+ext {
+    supportLibVersion = '24.2.1'  // variable that can be referenced to keep support libs consistent
+}
+
 repositories {
     jcenter()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
@@ -32,6 +36,7 @@ repositories {
 apply plugin: 'com.neenbedankt.android-apt'
 
 def dbflow_version = "3.1.1"
+def  supportLibVersion = "24.2.1"
 
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
@@ -45,5 +50,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.loopj.android:android-async-http:1.4.9'
-    compile 'com.android.support:design:24.2.1'
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
+    compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+    compile 'com.android.support:recyclerview-v7:24.2.1'
 }

@@ -1,4 +1,4 @@
-package com.codepath.apps.simpletweets;
+package com.codepath.apps.simpletweets.clients;
 
 import android.content.Context;
 
@@ -22,24 +22,19 @@ import org.scribe.builder.api.TwitterApi;
  * 
  */
 public class TwitterClient extends OAuthBaseClient {
-	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
-	public static final String REST_URL = "https://api.twitter.com/1.1/"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "NU9mPGg9pElEW9KidVU5tssFe";       // Change this
-	public static final String REST_CONSUMER_SECRET = "JDkcxpDgYEJfFwnyFFrcug1tcZXb2SNPd7LepFk9YyzSodlKWF"; // Change this
-	public static final String REST_CALLBACK_URL = "oauth://cpsimpletweets"; // Change this (here and in manifest)
+	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class;
+	public static final String REST_URL = "https://api.twitter.com/1.1/"; //base API URL
+	public static final String REST_CONSUMER_KEY = "NU9mPGg9pElEW9KidVU5tssFe";
+	public static final String REST_CONSUMER_SECRET = "JDkcxpDgYEJfFwnyFFrcug1tcZXb2SNPd7LepFk9YyzSodlKWF";
+	public static final String REST_CALLBACK_URL = "oauth://cpsimpletweets";
 
 	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
 
-	// CHANGE THIS
 	// DEFINE METHODS for different API endpoints here
 
-	// each method is an endpoint
-	//GET statuses/home_timeline.json
-	//count=25
-	//since_id=1
-
+	//HomeTimeLine - Gets us the home timeline
 	public void getHomeTimeLine(AsyncHttpResponseHandler handler) {
 		String APIUrl = getApiUrl("statuses/home_timeline.json");
 		//specify the params
@@ -51,16 +46,11 @@ public class TwitterClient extends OAuthBaseClient {
 	}
 
 	//composing a tweet
+	public void composeTweet(AsyncHttpResponseHandler handler) {
+		String APIUrl = getApiUrl("statuses/update.json");
+		RequestParams params = new RequestParams();
+		//params.put("status", status);
+		getClient().post(APIUrl, params, handler);
 
-	//HomeTimeLine - Gets us the home timeline
-
-
-	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
-	 * 	  i.e getApiUrl("statuses/home_timeline.json");
-	 * 2. Define the parameters to pass to the request (query or body)
-	 *    i.e RequestParams params = new RequestParams("foo", "bar");
-	 * 3. Define the request method and make a call to the client
-	 *    i.e client.get(apiUrl, params, handler);
-	 *    i.e client.post(apiUrl, params, handler);
-	 */
+	}
 }
