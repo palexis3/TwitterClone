@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codepath.apps.simpletweets.DividerItemDecoration;
 import com.codepath.apps.simpletweets.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.simpletweets.R;
 import com.codepath.apps.simpletweets.TwitterApplication;
@@ -58,6 +59,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
         getSupportActionBar().setLogo(R.drawable.ic_twitter);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+
         recyclerView = (RecyclerView) findViewById(R.id.rvTweets);
         //initializing arraylist to hold tweets
         tweetArrayList = new ArrayList<>();
@@ -70,6 +72,10 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
         recyclerView.setLayoutManager(linearLayoutManager);
         //set floating action button
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fbButton);
+
+        //add item view decorations
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
+        recyclerView.addItemDecoration(itemDecoration);
 
         client = TwitterApplication.getRestClient();
         //at the beginning receive first 25 tweets
