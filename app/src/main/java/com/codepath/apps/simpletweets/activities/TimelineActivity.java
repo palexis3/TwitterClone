@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codepath.apps.simpletweets.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.simpletweets.R;
 import com.codepath.apps.simpletweets.TwitterApplication;
 import com.codepath.apps.simpletweets.adapters.TweetsAdapter;
@@ -28,6 +29,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity implements TweetComposeDialogFragment.TweetComposeDialogListener{
 
+
     //access the twitter client
     private TwitterClient client;
     //item_tweet subviews
@@ -37,6 +39,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
     //floating button
     private FloatingActionButton floatingActionButton;
     private String input; //holds the input that is sent through dialog
+
+    // Store a member variable for the listener
+    private EndlessRecyclerViewScrollListener scrollListener;
 
 
     @Override
@@ -61,13 +66,33 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
         // Attach the adapter to the recyclerview to populate items
         recyclerView.setAdapter(adapter);
         //set the layout manager
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
         //set floating action button
         floatingActionButton = (FloatingActionButton) findViewById(R.id.fbButton);
 
         client = TwitterApplication.getRestClient();
-        populateTimeline();
+        //at the beginning receive first 25 tweets
+        populateTimeline(25);
         floatingActionButtonListener();
+
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataFromApi(page);
+            }
+        };
+
+        // Adds the scroll listener to RecyclerView
+        recyclerView.addOnScrollListener(scrollListener);
+    }
+
+    public void loadNextDataFromApi(int offset) {
+          int temp = client.getCount() + offset;
+          populateTimeline(temp); //run api request when user has scrolled down
     }
 
     //call dialog fragment when button clicked
@@ -92,9 +117,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
 
     //send an api request to get the timeline json
     //fill the recyclerview by creating the tweet objects from the json
-    private void populateTimeline() {
+    private void populateTimeline(int val) {
 
-        client.getHomeTimeLine(new JsonHttpResponseHandler() {
+        client.getHomeTimeLine(val, new JsonHttpResponseHandler() {
             //success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
