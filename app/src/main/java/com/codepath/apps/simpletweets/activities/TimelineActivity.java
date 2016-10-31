@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -42,6 +43,15 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        Toolbar toolBar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolBar);
+
+
+        // Display twitter icon in the toolbar
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.ic_twitter);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         recyclerView = (RecyclerView) findViewById(R.id.rvTweets);
         //initializing arraylist to hold tweets
@@ -93,8 +103,13 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
                 //deserialize json
                 //create models and add them to the model
                 //load the model data into listview
+
+                // record this value before making any changes to the existing list
+                int curSize = adapter.getItemCount();
+                //add tweets to arrayList
                 tweetArrayList.addAll(Tweet.fromJSONArray(json));
-                adapter.notifyDataSetChanged();
+                //curSize should represent the first element that got added
+                adapter.notifyItemRangeChanged(curSize, tweetArrayList.size());
             }
 
             //failure
@@ -119,14 +134,17 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
          client.composeTweet(input, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("DEBUG", response.toString());
+                //Log.d("DEBUG", response.toString());
                 Toast.makeText(getApplicationContext(), "I've successfully tweeted", Toast.LENGTH_LONG).show();
+                Tweet tweet = Tweet.fromJSON(response);
+                tweetArrayList.add(0, tweet);
+                adapter.notifyItemRangeInserted(0, 1);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-               Log.d("DEBUG", errorResponse.toString());
-                Toast.makeText(getApplicationContext(), "I've failed tweeted", Toast.LENGTH_LONG).show();
+               //Log.d("DEBUG", errorResponse.toString());
+               Toast.makeText(getApplicationContext(), "Failed Tweet", Toast.LENGTH_LONG).show();
             }
         });
 

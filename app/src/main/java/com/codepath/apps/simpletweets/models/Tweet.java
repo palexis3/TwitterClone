@@ -3,18 +3,36 @@ package com.codepath.apps.simpletweets.models;
 //parse the json and store the data
 //encapsulate state or display logic
 
+import com.codepath.apps.simpletweets.MyDatabase;
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Tweet {
+@Table(database = MyDatabase.class)
+public class Tweet extends BaseModel{
+
 
     //list out the attributes
+    @Column
     private String body;
+
+    @Column
+    @PrimaryKey
     private long uid; //unique id for the tweet
+
+    @Column
     private String createdAt;
+
+    @Column
+    @ForeignKey(saveForeignKeyModel = false)
     private User user; //store an embedded user object
 
 
@@ -61,6 +79,8 @@ public class Tweet {
         return tweets;
     }
 
+
+    //getters
     public String getBody() {
         return body;
     }
@@ -75,6 +95,23 @@ public class Tweet {
 
     public User getUser() {
         return user;
+    }
+
+    //setters
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public void setUid(long uid) {
+        this.uid = uid;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }
