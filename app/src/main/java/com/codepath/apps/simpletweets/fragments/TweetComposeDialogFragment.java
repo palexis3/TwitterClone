@@ -4,6 +4,8 @@ package com.codepath.apps.simpletweets.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ public class TweetComposeDialogFragment extends DialogFragment {
 
     private EditText tweetEditText;
     private Button tweetButton;
+    private EditText tweetCharacterCount;
 
     public TweetComposeDialogFragment() {
         //Empty constructor required for dialog fragment
@@ -41,11 +44,43 @@ public class TweetComposeDialogFragment extends DialogFragment {
         //get fields from view
         tweetEditText = (EditText) view.findViewById(R.id.etCompose);
         tweetButton = (Button) view.findViewById(R.id.btnTweet);
-        //fetch arguments from bundle and set title
-        if(tweetEditText.length() > 0) {
-            tweetButton.setEnabled(true);
-        } else {
-            tweetButton.setEnabled(false);
-        }
+        tweetCharacterCount = (EditText) view.findViewById(R.id.etCharacterCount);
+        //watch what's being typed in
+        watchText();
+    }
+
+    //this method watches as user is typing into compose editText
+    private void watchText() {
+        tweetEditText.addTextChangedListener(new TextWatcher() {
+
+            //update character count as user is typing in their content
+            String val = tweetCharacterCount.getText().toString();
+            int num = Integer.parseInt(val);
+            int temp = 0;
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                //change counter
+                temp = num - count;
+
+                //set button to clickable when editText has content
+                if(tweetEditText.length() > 0) {
+                    tweetButton.setEnabled(true);
+                } else {
+                    tweetButton.setEnabled(false);
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tweetCharacterCount.setText(String.valueOf(temp));
+            }
+        });
     }
 }
