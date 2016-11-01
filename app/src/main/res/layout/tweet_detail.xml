@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary"
+        app:contentInsetLeft="1dp"
+        app:contentInsetStart="1dp">
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/ivDetailProfile"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_margin="5dp"
+        android:layout_below="@id/toolbar"/>
+
+    <TextView
+        android:id="@+id/tvDetailName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_username"
+        style="@style/CodeFont"
+        android:layout_below="@id/toolbar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_toRightOf="@+id/ivDetailProfile"
+        android:layout_toEndOf="@+id/ivDetailProfile" />
+
+    <TextView
+        android:id="@+id/tvDetailScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_screen_name"
+        android:layout_below="@id/tvDetailName"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_alignBottom="@+id/ivDetailProfile"
+        android:layout_toRightOf="@+id/ivDetailProfile"
+        android:layout_toEndOf="@+id/ivDetailProfile" />
+
+    <TextView
+        android:id="@+id/tvDetailBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/CodeFont"
+        android:text="@string/detail_body"
+        android:layout_below="@+id/ivDetailProfile"
+        android:layout_alignLeft="@+id/ivDetailProfile"
+        android:layout_alignStart="@+id/ivDetailProfile"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/tvDetailCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_created_at"
+        android:layout_below="@+id/tvDetailBody"
+        android:layout_alignLeft="@+id/tvDetailBody"
+        android:layout_alignStart="@+id/tvDetailBody" />
+
+</RelativeLayout>

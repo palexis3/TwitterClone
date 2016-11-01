@@ -13,11 +13,13 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 
+@Parcel
 @Table(database = MyDatabase.class)
-public class Tweet extends BaseModel{
+public class Tweet extends BaseModel {
 
 
     //list out the attributes
@@ -34,6 +36,10 @@ public class Tweet extends BaseModel{
     @Column
     @ForeignKey(saveForeignKeyModel = false)
     private User user; //store an embedded user object
+
+    // empty constructor needed by the Parceler library
+    public Tweet() {
+    }
 
 
     //Deserialize the JSON and build

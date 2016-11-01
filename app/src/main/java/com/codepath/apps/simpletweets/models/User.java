@@ -8,7 +8,9 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
+@Parcel
 @Table(database = MyDatabase.class)
 public class User extends BaseModel{
     @Column
@@ -23,6 +25,10 @@ public class User extends BaseModel{
 
     @Column
     private String profileImageUrl;
+
+    // empty constructor needed by the Parceler library
+    public User() {
+    }
 
     //deserialize the user json => User
     public static User fromJSON(JSONObject json) {

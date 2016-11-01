@@ -1,5 +1,6 @@
 package com.codepath.apps.simpletweets.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.codepath.apps.simpletweets.DividerItemDecoration;
 import com.codepath.apps.simpletweets.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.simpletweets.ItemClickSupport;
 import com.codepath.apps.simpletweets.R;
 import com.codepath.apps.simpletweets.TwitterApplication;
 import com.codepath.apps.simpletweets.adapters.TweetsAdapter;
@@ -23,6 +25,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -81,6 +84,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
         //at the beginning receive first 25 tweets
         populateTimeline(25);
         floatingActionButtonListener();
+        itemClickListener();
 
 
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
@@ -118,8 +122,22 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
         fragment.show(fm, "dialog_compose_tweet");
     }
 
+    //an item in view has been clicked on
+    private void itemClickListener() {
+        ItemClickSupport.addTo(recyclerView).setOnItemClickListener(
+                new ItemClickSupport.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                        //start tweet detail activity
+                        Tweet tweet = tweetArrayList.get(position);
+                        Intent i = new Intent(TimelineActivity.this, TweetDetailActivity.class);
+                        i.putExtra("tweet", Parcels.wrap(tweet));
+                        startActivity(i);
+                    }
+                }
+        );
 
-
+    }
 
     //send an api request to get the timeline json
     //fill the recyclerview by creating the tweet objects from the json
