@@ -46,7 +46,7 @@ public class User extends BaseModel{
         return u;
     }
 
-    //setter
+    //setters
     public void setName(String name) {
         this.name = name;
     }
@@ -63,7 +63,7 @@ public class User extends BaseModel{
         this.profileImageUrl = profileImageUrl;
     }
 
-    //getter
+    //getters
     public String getName() {
         return name;
     }

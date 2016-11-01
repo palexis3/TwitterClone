@@ -30,6 +30,29 @@
         android:text="@string/body"
         android:layout_below="@+id/tvUserName"
         android:layout_toRightOf="@+id/ivProfileImage"
-        android:layout_toEndOf="@+id/ivProfileImage" />
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_marginTop="14dp"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/at_name"
+        android:scrollHorizontally="false"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="1dp"
+        android:layout_alignTop="@+id/ivProfileImage"
+        android:layout_toRightOf="@+id/tvUserName"
+        android:layout_toEndOf="@+id/tvUserName" />
+
+    <TextView
+        android:id="@+id/tvTimeStamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tweet_time_stamp"
+        android:layout_alignTop="@+id/tvName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

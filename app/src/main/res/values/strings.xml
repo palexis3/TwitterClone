@@ -14,5 +14,7 @@
     <string name="detail_screen_name">ScreenName</string>
     <string name="detail_body">Text</string>
     <string name="detail_created_at">Created At</string>
+    <string name="at_name">Name</string>
+    <string name="tweet_time_stamp">Time Stamp</string>
 
 </resources>
