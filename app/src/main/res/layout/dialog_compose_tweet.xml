@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="100dp"
+    android:padding="5dp">
 
     <EditText
         android:id="@+id/etCompose"
@@ -16,13 +17,15 @@
 
     <Button
         android:id="@+id/btnTweet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:text="@string/tweet_button"
         android:layout_below="@+id/etCompose"
         android:layout_toRightOf="@+id/etCompose"
         android:layout_toEndOf="@+id/etCompose"
-        android:layout_marginTop="43dp" />
+        android:layout_marginTop="43dp"
+        android:background="?attr/colorPrimary"
+        style="@style/TweetButtonStyle"/>
 
     <EditText
         android:id="@+id/etCharacterCount"
@@ -31,9 +34,9 @@
         android:background="@android:color/transparent"
         android:text="@string/tweet_character_count"
         android:maxLength="140"
-        android:layout_marginRight="57dp"
+        android:layout_marginRight="67dp"
         android:layout_marginEnd="57dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="13dp"
         android:layout_alignTop="@+id/btnTweet"
         android:layout_toLeftOf="@+id/btnTweet"
         android:layout_toStartOf="@+id/btnTweet" />

@@ -58,27 +58,38 @@ public class TweetComposeDialogFragment extends DialogFragment {
     //this method watches as user is typing into compose editText
     private void watchText() {
         tweetEditText.addTextChangedListener(new TextWatcher() {
-            int num = tweetEditText.getText().length();
+            String before = "";
+            String after = "";
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                tweetCharacterCount.setText(String.valueOf(140 - num));
+                before = tweetEditText.getText().toString();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //update character count as user is typing in their content
-                num = tweetCharacterCount.getText().toString().length();
-                tweetCharacterCount.setText(String.valueOf(140 - num));
+                after = tweetEditText.getText().toString();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
+                int offset  = after.length() - before.length();
+                int num = 5;
                 tweetCharacterCount.setText(String.valueOf(140 - num));
 
+                /*
+                if(after.length() > before.length()) {
+                    offset = after.length() - before.length();
+                    tweetCharacterCount.setText(String.valueOf(140 - offset));
+                } else {
+                    offset = before.length() - after.length();
+                    tweetCharacterCount.setText(String.valueOf(before.length() + offset));
+                }
+                */
+
                 //set button to clickable when editText has content
-                if (tweetEditText.length() > 0) {
+                if (tweetEditText.length() > 0 && tweetEditText.length() <= 140) {
                     tweetButton.setEnabled(true);
                     //watch the button listener
                     tweetButtonListener();

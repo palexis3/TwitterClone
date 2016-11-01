@@ -12,11 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.codepath.apps.simpletweets.DividerItemDecoration;
-import com.codepath.apps.simpletweets.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.simpletweets.decorators.DividerItemDecoration;
+import com.codepath.apps.simpletweets.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.simpletweets.ItemClickSupport;
 import com.codepath.apps.simpletweets.R;
-import com.codepath.apps.simpletweets.TwitterApplication;
+import com.codepath.apps.simpletweets.applications.TwitterApplication;
 import com.codepath.apps.simpletweets.adapters.TweetsAdapter;
 import com.codepath.apps.simpletweets.clients.TwitterClient;
 import com.codepath.apps.simpletweets.fragments.TweetComposeDialogFragment;

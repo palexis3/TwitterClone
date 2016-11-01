@@ -1,4 +1,4 @@
-package com.codepath.apps.simpletweets;
+package com.codepath.apps.simpletweets.decorators;
 
 import android.content.Context;
 import android.content.res.TypedArray;
