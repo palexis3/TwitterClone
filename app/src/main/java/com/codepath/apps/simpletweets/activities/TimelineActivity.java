@@ -97,6 +97,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
                 //sort arraylist to get lowest id
                 ArrayList<Tweet> temp = tweetArrayList;
                 Collections.sort(temp);
+                Log.d("DEBUG", temp.get(0).getUid() + ", " + temp.get(1).getUid());
                 long lowestID = temp.get(0).getUid();
                 loadNextDataFromApi(String.valueOf(lowestID));
             }
