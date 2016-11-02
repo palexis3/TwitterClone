@@ -12,14 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.codepath.apps.simpletweets.decorators.DividerItemDecoration;
-import com.codepath.apps.simpletweets.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.simpletweets.ItemClickSupport;
 import com.codepath.apps.simpletweets.R;
-import com.codepath.apps.simpletweets.applications.TwitterApplication;
 import com.codepath.apps.simpletweets.adapters.TweetsAdapter;
+import com.codepath.apps.simpletweets.applications.TwitterApplication;
 import com.codepath.apps.simpletweets.clients.TwitterClient;
+import com.codepath.apps.simpletweets.decorators.DividerItemDecoration;
 import com.codepath.apps.simpletweets.fragments.TweetComposeDialogFragment;
+import com.codepath.apps.simpletweets.listeners.EndlessRecyclerViewScrollListener;
 import com.codepath.apps.simpletweets.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -82,7 +83,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
 
         client = TwitterApplication.getRestClient();
         //at the beginning receive first 25 tweets
-        populateTimeline(25);
+        populateTimeline("25", false);
         floatingActionButtonListener();
         itemClickListener();
 
@@ -92,7 +93,12 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                loadNextDataFromApi(page);
+
+                //sort arraylist to get lowest id
+                ArrayList<Tweet> temp = tweetArrayList;
+                Collections.sort(temp);
+                long lowestID = temp.get(0).getUid();
+                loadNextDataFromApi(String.valueOf(lowestID));
             }
         };
 
@@ -100,9 +106,8 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
         recyclerView.addOnScrollListener(scrollListener);
     }
 
-    public void loadNextDataFromApi(int offset) {
-          int temp = client.getCount() + offset;
-          populateTimeline(temp); //run api request when user has scrolled down
+    public void loadNextDataFromApi(String lowestId) {
+          populateTimeline(lowestId, true); //run api request when user has scrolled down
     }
 
     //call dialog fragment when button clicked
@@ -141,9 +146,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
 
     //send an api request to get the timeline json
     //fill the recyclerview by creating the tweet objects from the json
-    private void populateTimeline(int val) {
+    private void populateTimeline(String val, boolean bool) {
 
-        client.getHomeTimeLine(val, new JsonHttpResponseHandler() {
+        client.getHomeTimeLine(val, bool, new JsonHttpResponseHandler() {
             //success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
@@ -165,10 +170,12 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
+                Toast.makeText(getApplicationContext(), "I fail", Toast.LENGTH_LONG).show();
             }
         });
 
     }
+
 
     // This method is invoked in the activity when the listener is triggered
     // Access the data result passed to the activity here

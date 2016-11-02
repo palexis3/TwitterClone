@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 @Parcel
 @Table(database = MyDatabase.class)
-public class Tweet extends BaseModel {
+public class Tweet extends BaseModel implements Comparable<Tweet> {
 
 
     //list out the attributes
@@ -83,6 +83,11 @@ public class Tweet extends BaseModel {
         }
 
         return tweets;
+    }
+
+    //used for comparing ids
+    public int compareTo(Tweet other) {
+        return (int) (this.uid - other.uid);
     }
 
 

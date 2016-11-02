@@ -74,11 +74,11 @@ public class TweetComposeDialogFragment extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
 
+                //refactor as edit is being typed in
+                /*
                 int offset  = after.length() - before.length();
-                int num = 5;
                 tweetCharacterCount.setText(String.valueOf(140 - num));
 
-                /*
                 if(after.length() > before.length()) {
                     offset = after.length() - before.length();
                     tweetCharacterCount.setText(String.valueOf(140 - offset));
