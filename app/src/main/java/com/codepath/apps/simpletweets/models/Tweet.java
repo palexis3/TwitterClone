@@ -87,7 +87,9 @@ public class Tweet extends BaseModel implements Comparable<Tweet> {
 
     //used for comparing ids
     public int compareTo(Tweet other) {
-        return (int) (this.uid - other.uid);
+        String current = String.valueOf(this.getUid());
+        String next = String.valueOf(other.getUid());
+        return current.compareTo(next);
     }
 
 

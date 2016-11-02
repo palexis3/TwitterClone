@@ -170,7 +170,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetComposeD
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("DEBUG", errorResponse.toString());
-                Toast.makeText(getApplicationContext(), "I fail", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_LONG).show();
             }
         });
 
