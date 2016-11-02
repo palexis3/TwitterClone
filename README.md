@@ -39,7 +39,7 @@ The following **bonus** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/palexis3/TwitterClone/blob/master/TwitterApiSecond.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/palexis3/TwitterClone/blob/master/TwitterApiThird.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
