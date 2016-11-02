@@ -43,7 +43,7 @@ public class TwitterClient extends OAuthBaseClient {
 		if(!isMaxIDSet) {
 			params.put("count", val);
 		} else {
-			params.add("max_id", val);
+			params.put("max_id", val);
 		}
 		//execute the request
 		getClient().get(APIUrl, params, handler);
